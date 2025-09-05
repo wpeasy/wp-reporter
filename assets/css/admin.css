@@ -1,4 +1,15 @@
 @layer wp-reporter {
+    
+    /* Universal dark mode fix - highest priority */
+    .wp-reporter__info-section h3 {
+        color: #1d2327 !important;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .wp-reporter__info-section h3 {
+            color: #ffffff !important;
+        }
+    }
     .wp-reporter {
         margin: 20px 0;
     }
@@ -248,7 +259,7 @@
     
     .wp-reporter__info-section h3 {
         margin: 0 0 15px 0;
-        color: #1d2327;
+        color: #1d2327 !important;
         font-size: 18px;
         border-bottom: 2px solid #0073aa;
         padding-bottom: 8px;
@@ -307,7 +318,7 @@
         }
     }
     
-    /* Dark mode support */
+    /* Dark mode support - both auto-detect and WordPress admin dark mode */
     @media (prefers-color-scheme: dark) {
         .wp-reporter__tabs {
             background: #1d2327;
@@ -336,6 +347,21 @@
             border-color: #3c434a;
         }
         
+        .wp-reporter__filter-group label {
+            color: #e5e5e5;
+        }
+        
+        .wp-reporter__info-section h3 {
+            color: #e5e5e5;
+            border-bottom-color: #72aee6;
+        }
+        
+        .wp-reporter__filter {
+            background: #3c434a;
+            color: #e5e5e5;
+            border-color: #5a5a5a;
+        }
+        
         .wp-reporter__table {
             background: #1d2327;
             color: #f0f0f1;
@@ -343,7 +369,7 @@
         
         .wp-reporter__table th {
             background: #2c3338;
-            color: #f0f0f1;
+            color: #e5e5e5;
             border-color: #3c434a;
         }
         
@@ -354,6 +380,39 @@
         .wp-reporter__table tbody tr:hover {
             background: #2c3338;
         }
+        
+        .wp-reporter__table-container {
+            border-color: #3c434a;
+        }
+    }
+    
+    /* WordPress admin dark mode support - aggressive targeting */
+    body.wp-admin .wp-reporter__info-section h3,
+    .wp-admin .wp-reporter__info-section h3,
+    html body.wp-admin .wp-reporter__info-section h3,
+    .wp-admin.admin-color-midnight .wp-reporter__info-section h3,
+    .wp-admin[data-color-scheme="midnight"] .wp-reporter__info-section h3,
+    body.admin-color-midnight .wp-reporter__info-section h3,
+    .wp-dark-theme .wp-reporter__info-section h3,
+    .admin-color-midnight .wp-reporter__info-section h3 {
+        color: #ffffff !important;
+        border-bottom-color: #72aee6 !important;
+    }
+    
+    .wp-admin.admin-color-midnight .wp-reporter__filter-group label,
+    .wp-admin[data-color-scheme="midnight"] .wp-reporter__filter-group label,
+    body.admin-color-midnight .wp-reporter__filter-group label,
+    .wp-dark-theme .wp-reporter__filter-group label {
+        color: #e5e5e5 !important;
+    }
+    
+    .wp-admin.admin-color-midnight .wp-reporter__table th,
+    .wp-admin[data-color-scheme="midnight"] .wp-reporter__table th,
+    body.admin-color-midnight .wp-reporter__table th,
+    .wp-dark-theme .wp-reporter__table th {
+        background: #2c3338 !important;
+        color: #e5e5e5 !important;
+        border-color: #3c434a !important;
     }
     
     /* Animation for loading states */

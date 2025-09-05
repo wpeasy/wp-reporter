@@ -30,7 +30,8 @@
       "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
       "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
       "Read(/c:\\Users\\Alan.Blair\\Downloads/**)",
-      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)"
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
+      "Read(//c/Users/Alan.Blair/Downloads/**)"
     ],
     "deny": [],
     "ask": []

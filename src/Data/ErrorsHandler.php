@@ -52,13 +52,8 @@ final class ErrorsHandler {
             if (preg_match('/^\[([^\]]+)\]\s+PHP\s+([^:]+):\s+(.+)/', $line, $matches)) {
                 $message = trim($matches[3]);
                 
-                // Extract file path if it contains "in C:\" 
-                $file = 'N/A';
-                if (preg_match('/in\s+(C:\\\\[^\\s]+)/', $message, $file_matches)) {
-                    $file = str_replace('\\\\', '\\', $file_matches[1]);
-                    // Shorten to relative path
-                    $file = str_replace('C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\', '', $file);
-                }
+                // Show the log file path (shortened)
+                $log_file = str_replace('C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\', '', $log_path);
                 
                 $errors[] = [
                     'id' => md5($line),
@@ -66,7 +61,7 @@ final class ErrorsHandler {
                     'log_type' => 'Server',
                     'level' => trim($matches[2]),
                     'message' => $message,
-                    'file' => $file,
+                    'file' => $log_file,
                 ];
             }
         }
