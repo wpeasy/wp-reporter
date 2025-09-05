@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(composer install:*)",
+      "Bash(curl:*)",
+      "Read(c:\\Users\\Alan.Blair\\Downloads/**)",
+      "Read(C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\Admin/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\Admin/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\Admin/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\assets\\js/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\assets\\js/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\API/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\API/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\API/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\assets\\css/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\logs\\php/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\Data/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\logs\\php/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\logs\\php/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)",
+      "Read(/c:\\Users\\Alan.Blair\\Downloads/**)",
+      "Read(/C:\\Users\\Alan.Blair\\Local Sites\\bricks-playground\\app\\public\\wp-content\\plugins\\wp-reporter\\src\\PDF/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

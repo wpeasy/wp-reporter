@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WordPress Site Report Template</title>
+    <style>
+        /* PDF Template Styles - Edit these to customize the PDF appearance */
+        
+        /* Page Layout */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Headers */
+        h1 {
+            font-size: 18pt;
+            color: #0073aa;
+            border-bottom: 2px solid #0073aa;
+            padding-bottom: 5px;
+            margin: 0 0 15px 0;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            color: #23282d;
+            margin: 20px 0 10px 0;
+            page-break-after: avoid;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            color: #23282d;
+            margin: 15px 0 8px 0;
+        }
+        
+        /* Cover Page Styles */
+        .cover-page {
+            text-align: center;
+            padding-top: 100px;
+            page-break-after: always;
+        }
+        
+        .cover-title {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #0073aa;
+            margin-bottom: 30px;
+        }
+        
+        .cover-site-name {
+            font-size: 18pt;
+            margin-bottom: 10px;
+        }
+        
+        .cover-url {
+            font-size: 12pt;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .cover-summary {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto 40px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .cover-meta {
+            font-size: 8pt;
+            color: #999;
+            margin-top: 60px;
+        }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        table.data-table {
+            font-size: 9pt;
+        }
+        
+        table.info-table {
+            font-size: 8pt;
+        }
+        
+        th {
+            background-color: #f1f1f1;
+            color: #23282d;
+            font-weight: bold;
+            padding: 8px 6px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        td {
+            padding: 6px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        
+        /* Alternating row colors */
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Status badges */
+        .status-active {
+            color: #007cba;
+            font-weight: bold;
+        }
+        
+        .status-inactive {
+            color: #999;
+        }
+        
+        .status-published {
+            color: #00a32a;
+        }
+        
+        .status-draft {
+            color: #dba617;
+        }
+        
+        .update-available {
+            color: #d63638;
+            font-weight: bold;
+        }
+        
+        .update-current {
+            color: #00a32a;
+        }
+        
+        /* Page hierarchy indentation */
+        .page-child {
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .page-child:before {
+            content: "└ ";
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+        
+        /* Filter information */
+        .filters-applied {
+            background-color: #e7f3ff;
+            border: 1px solid #72aee6;
+            border-radius: 3px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 9pt;
+        }
+        
+        .filters-applied strong {
+            color: #0073aa;
+        }
+        
+        .filter-item {
+            margin: 2px 0;
+        }
+        
+        .filter-item:before {
+            content: "• ";
+            color: #0073aa;
+        }
+        
+        /* Section spacing */
+        .section {
+            margin: 0 0 30px 0;
+            page-break-inside: avoid;
+        }
+        
+        .subsection {
+            margin: 0 0 20px 0;
+        }
+        
+        /* Empty state */
+        .no-data {
+            text-align: center;
+            font-style: italic;
+            color: #999;
+            padding: 20px;
+            border: 1px dashed #ddd;
+            margin: 10px 0;
+        }
+        
+        /* Page breaks */
+        .page-break {
+            page-break-before: always;
+        }
+        
+        /* Custom header/footer areas */
+        .report-header {
+            border-bottom: 2px solid #0073aa;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .report-footer {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 30px;
+            font-size: 8pt;
+            color: #666;
+            text-align: center;
+        }
+        
+        /* Logo/branding area */
+        .site-logo {
+            float: right;
+            max-width: 80px;
+            max-height: 80px;
+            margin-left: 20px;
+        }
+        
+        /* Responsive adjustments for PDF */
+        @media print {
+            body {
+                font-size: 9pt;
+            }
+            
+            .cover-page {
+                padding-top: 150px;
+            }
+            
+            table {
+                page-break-inside: auto;
+            }
+            
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+            
+            thead {
+                display: table-header-group;
+            }
+            
+            tfoot {
+                display: table-footer-group;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- This is a template file - the actual content will be generated by PHP -->
+    
+    <!-- COVER PAGE TEMPLATE -->
+    <div class="cover-page">
+        <!-- Site logo placeholder - will be replaced with actual site icon if available -->
+        <div class="site-logo-placeholder" style="margin-bottom: 40px;">
+            <!-- Logo will be inserted here by PdfGenerator -->
+        </div>
+        
+        <div class="cover-title">WordPress Site Report</div>
+        <div class="cover-site-name">[SITE_NAME]</div>
+        <div class="cover-url">[SITE_URL]</div>
+        
+        <div class="cover-summary">
+            <h3>Report Summary</h3>
+            <div><strong>WordPress Version:</strong> [WP_VERSION]</div>
+            <div><strong>Active Theme:</strong> [ACTIVE_THEME]</div>
+            <div><strong>Total Plugins:</strong> [PLUGIN_COUNT]</div>
+            <div><strong>Active Plugins:</strong> [ACTIVE_PLUGINS]</div>
+            <div><strong>Total Pages:</strong> [PAGE_COUNT]</div>
+            <div><strong>Total Themes:</strong> [THEME_COUNT]</div>
+        </div>
+        
+        <div class="cover-meta">
+            <div>Generated on: [GENERATION_DATE]</div>
+            <div>Generated by: WP Reporter Plugin v[PLUGIN_VERSION]</div>
+        </div>
+    </div>
+    
+    <!-- CONTENT SECTIONS TEMPLATE -->
+    <!-- The actual sections will be generated dynamically -->
+    
+    <!-- PLUGINS SECTION TEMPLATE -->
+    <div class="section page-break">
+        <h1>Plugins Report</h1>
+        
+        <!-- Filters will be inserted here if any are applied -->
+        <div class="filters-placeholder">
+            <!-- [PLUGIN_FILTERS] -->
+        </div>
+        
+        <!-- Plugin table will be generated here -->
+        <div class="plugins-content">
+            <!-- [PLUGINS_TABLE] -->
+        </div>
+    </div>
+    
+    <!-- PAGES SECTION TEMPLATE -->
+    <div class="section page-break">
+        <h1>Pages Report</h1>
+        
+        <!-- Filters will be inserted here if any are applied -->
+        <div class="filters-placeholder">
+            <!-- [PAGE_FILTERS] -->
+        </div>
+        
+        <!-- Pages table will be generated here -->
+        <div class="pages-content">
+            <!-- [PAGES_TABLE] -->
+        </div>
+    </div>
+    
+    <!-- THEMES SECTION TEMPLATE -->
+    <div class="section page-break">
+        <h1>Themes Report</h1>
+        
+        <!-- Filters will be inserted here if any are applied -->
+        <div class="filters-placeholder">
+            <!-- [THEME_FILTERS] -->
+        </div>
+        
+        <!-- Themes table will be generated here -->
+        <div class="themes-content">
+            <!-- [THEMES_TABLE] -->
+        </div>
+    </div>
+    
+    <!-- SYSTEM INFO SECTION TEMPLATE -->
+    <div class="section page-break">
+        <h1>System Information</h1>
+        
+        <div class="subsection">
+            <h2>WordPress Information</h2>
+            <!-- [WORDPRESS_INFO_TABLE] -->
+        </div>
+        
+        <div class="subsection">
+            <h2>WordPress Constants</h2>
+            <!-- [CONSTANTS_INFO_TABLE] -->
+        </div>
+        
+        <div class="subsection">
+            <h2>Directories and Sizes</h2>
+            <!-- [DIRECTORIES_INFO_TABLE] -->
+        </div>
+        
+        <div class="subsection">
+            <h2>Server Information</h2>
+            <!-- [SERVER_INFO_TABLE] -->
+        </div>
+    </div>
+    
+    <!-- FOOTER TEMPLATE -->
+    <div class="report-footer">
+        <div>WordPress Site Report generated by WP Reporter Plugin</div>
+        <div>[GENERATION_TIMESTAMP]</div>
+    </div>
+    
+</body>
+</html>

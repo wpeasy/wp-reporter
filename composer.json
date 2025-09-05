@@ -1,0 +1,27 @@
+{
+    "name": "wpeasy/wp-reporter",
+    "description": "WordPress admin interface to create reports on the current status of a WordPress installation",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "WP Easy",
+            "email": "support@wpeasy.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "tecnickcom/tcpdf": "^6.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "WP_Easy\\WP_Reporter\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "classmap-authoritative": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
