@@ -32,9 +32,14 @@ final class PdfGenerator {
     private array $filters;
     
     /**
+     * Sections to include in PDF
+     */
+    private array $includes;
+    
+    /**
      * Constructor
      */
-    public function __construct(array $filters = []) {
+    public function __construct(array $filters = [], array $includes = []) {
         // Ensure TCPDF is loaded
         if (!class_exists('TCPDF')) {
             $tcpdf_path = WPE_WPR_PLUGIN_PATH . 'vendor/tecnickcom/tcpdf/tcpdf.php';
@@ -44,6 +49,13 @@ final class PdfGenerator {
         }
         
         $this->filters = $filters;
+        $this->includes = array_merge([
+            'plugins' => true,
+            'pages' => true,
+            'themes' => true,
+            'info' => true,
+            'errors' => true
+        ], $includes);
         $this->init_pdf();
     }
     
@@ -93,9 +105,9 @@ final class PdfGenerator {
         $this->pdf->setHeaderFont(Array('helvetica', '', 10));
         $this->pdf->setFooterFont(Array('helvetica', '', 8));
         
-        // Set margins
-        $this->pdf->SetMargins(15, 27, 15);
-        $this->pdf->SetHeaderMargin(5);
+        // Set margins - reduced top margin for more space
+        $this->pdf->SetMargins(15, 20, 15);
+        $this->pdf->SetHeaderMargin(3);
         $this->pdf->SetFooterMargin(10);
         
         // Set auto page breaks
@@ -110,11 +122,27 @@ final class PdfGenerator {
         
         // Add pages
         $this->add_cover_page();
-        $this->add_plugins_section();
-        $this->add_pages_section();
-        $this->add_themes_section();
-        $this->add_errors_section();
-        $this->add_info_section();
+        
+        // Conditionally add sections based on includes settings
+        if (!empty($this->includes['plugins'])) {
+            $this->add_plugins_section();
+        }
+        
+        if (!empty($this->includes['pages'])) {
+            $this->add_pages_section();
+        }
+        
+        if (!empty($this->includes['themes'])) {
+            $this->add_themes_section();
+        }
+        
+        if (!empty($this->includes['errors'])) {
+            $this->add_errors_section();
+        }
+        
+        if (!empty($this->includes['info'])) {
+            $this->add_info_section();
+        }
         
         return $this->pdf->Output('wp-report-' . sanitize_title(get_bloginfo('name')) . '-' . date('Y-m-d-H-i-s') . '.pdf', 'S');
     }
@@ -144,24 +172,24 @@ final class PdfGenerator {
         // Site logo/icon if available
         $site_icon = get_site_icon_url(120);
         if ($site_icon) {
-            $this->pdf->Image($site_icon, 85, 50, 40, 40, '', '', '', false, 300, '', false, false, 1);
+            $this->pdf->Image($site_icon, 85, 30, 40, 40, '', '', '', false, 300, '', false, false, 1);
         }
         
-        $this->pdf->Ln(60);
+        $this->pdf->Ln($site_icon ? 45 : 25);
         
-        // Title
-        $this->pdf->SetFont('helvetica', 'B', 24);
-        $this->pdf->Cell(0, 15, 'WordPress Site Report', 0, 1, 'C');
+        // Title - reduced size and spacing
+        $this->pdf->SetFont('helvetica', 'B', 20);
+        $this->pdf->Cell(0, 12, 'WordPress Site Report', 0, 1, 'C');
         
-        $this->pdf->Ln(10);
+        $this->pdf->Ln(5);
         
-        // Site information
-        $this->pdf->SetFont('helvetica', '', 14);
-        $this->pdf->Cell(0, 10, get_bloginfo('name'), 0, 1, 'C');
-        $this->pdf->SetFont('helvetica', '', 12);
-        $this->pdf->Cell(0, 8, home_url(), 0, 1, 'C');
+        // Site information - reduced spacing
+        $this->pdf->SetFont('helvetica', '', 13);
+        $this->pdf->Cell(0, 8, get_bloginfo('name'), 0, 1, 'C');
+        $this->pdf->SetFont('helvetica', '', 11);
+        $this->pdf->Cell(0, 6, home_url(), 0, 1, 'C');
         
-        $this->pdf->Ln(20);
+        $this->pdf->Ln(15);
         
         // Report summary
         $this->pdf->SetFont('helvetica', 'B', 12);
@@ -179,11 +207,11 @@ final class PdfGenerator {
         ];
         
         foreach ($summary_data as $label => $value) {
-            $this->pdf->Cell(70, 6, $label . ':', 0, 0, 'L');
-            $this->pdf->Cell(0, 6, (string) $value, 0, 1, 'L');
+            $this->pdf->Cell(70, 5, $label . ':', 0, 0, 'L');
+            $this->pdf->Cell(0, 5, (string) $value, 0, 1, 'L');
         }
         
-        $this->pdf->Ln(10);
+        $this->pdf->Ln(8);
         
         // Generation info
         $this->pdf->SetFont('helvetica', '', 8);

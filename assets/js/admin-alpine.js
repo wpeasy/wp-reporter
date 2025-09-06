@@ -14,6 +14,13 @@ window.wpReporter = () => {
             info: false,
             errors: false
         },
+        pdfIncludes: {
+            plugins: true,
+            pages: true,
+            themes: true,
+            info: true,
+            errors: true
+        },
         filters: {
             plugins: {
                 status: '',
@@ -217,7 +224,8 @@ window.wpReporter = () => {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: new URLSearchParams({
-                        filters: JSON.stringify(this.filters)
+                        filters: JSON.stringify(this.filters),
+                        includes: JSON.stringify(this.pdfIncludes)
                     })
                 });
                 

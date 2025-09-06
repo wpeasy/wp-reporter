@@ -145,12 +145,19 @@ final class RestController {
                 'tab' => [
                     'required' => true,
                     'type' => 'string',
-                    'enum' => ['plugins', 'pages', 'themes', 'info'],
+                    'enum' => ['plugins', 'pages', 'themes', 'info', 'errors'],
                     'sanitize_callback' => 'sanitize_text_field',
                 ],
                 'filters' => [
-                    'type' => 'object',
+                    'type' => ['object', 'string'],
                     'default' => [],
+                    'sanitize_callback' => function($value) {
+                        if (is_string($value)) {
+                            $decoded = json_decode($value, true);
+                            return is_array($decoded) ? $decoded : [];
+                        }
+                        return is_array($value) ? $value : [];
+                    },
                 ],
             ],
         ]);
@@ -171,6 +178,19 @@ final class RestController {
                             return json_encode($param);
                         }
                         return '{}';
+                    },
+                ],
+                'includes' => [
+                    'type' => 'string',
+                    'default' => '{"plugins":true,"pages":true,"themes":true,"info":true,"errors":true}',
+                    'sanitize_callback' => function($param) {
+                        // Accept both string and array
+                        if (is_string($param)) {
+                            return $param;
+                        } elseif (is_array($param)) {
+                            return json_encode($param);
+                        }
+                        return '{"plugins":true,"pages":true,"themes":true,"info":true,"errors":true}';
                     },
                 ],
             ],
@@ -304,7 +324,7 @@ final class RestController {
      */
     public static function export_csv(WP_REST_Request $request) {
         $tab = $request->get_param('tab');
-        $filters = $request->get_param('filters');
+        $filters = $request->get_param('filters') ?: [];
         
         $data = [];
         $filename = 'wp-reporter-' . $tab . '-' . date('Y-m-d-H-i-s') . '.csv';
@@ -328,12 +348,17 @@ final class RestController {
                 );
                 break;
             case 'errors':
-                $data = ErrorsHandler::get_errors($filters);
+                $data = ErrorsHandler::get_errors($filters ?: []);
                 break;
         }
         
         if (empty($data)) {
-            return new WP_Error('no_data', 'No data available for export', ['status' => 404]);
+            return new WP_REST_Response(['error' => 'No data available for export'], 404);
+        }
+        
+        // Ensure data is properly structured for CSV
+        if (!is_array($data) || !isset($data[0]) || !is_array($data[0])) {
+            return new WP_REST_Response(['error' => 'Invalid data format for CSV export'], 400);
         }
         
         // Generate CSV content
@@ -343,6 +368,7 @@ final class RestController {
             'filename' => $filename,
             'content' => $csv_content,
             'mime_type' => 'text/csv',
+            'size' => strlen($csv_content),
         ], 200);
     }
     
@@ -383,8 +409,12 @@ final class RestController {
             $filters = is_string($filters_param) ? json_decode($filters_param, true) : $filters_param;
             $filters = $filters ?: [];
             
-            // Create PDF generator with filters
-            $pdf_generator = new PdfGenerator($filters);
+            $includes_param = $request->get_param('includes') ?: '{"plugins":true,"pages":true,"themes":true,"info":true,"errors":true}';
+            $includes = is_string($includes_param) ? json_decode($includes_param, true) : $includes_param;
+            $includes = $includes ?: ['plugins' => true, 'pages' => true, 'themes' => true, 'info' => true, 'errors' => true];
+            
+            // Create PDF generator with filters and includes
+            $pdf_generator = new PdfGenerator($filters, $includes);
             
             // Generate PDF content
             $pdf_content = $pdf_generator->generate();

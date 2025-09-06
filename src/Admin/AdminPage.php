@@ -109,6 +109,10 @@ final class AdminPage {
                                 <option value="current"><?php esc_html_e('Up to Date', 'wpe-wpr'); ?></option>
                             </select>
                         </div>
+                        <label class="wp-reporter__pdf-checkbox">
+                            <input type="checkbox" x-model="pdfIncludes.plugins" />
+                            <span class="wp-reporter__checkbox-label"><?php esc_html_e('Include in PDF', 'wpe-wpr'); ?></span>
+                        </label>
                         <button type="button" 
                                 class="button wp-reporter__export-csv" 
                                 x-on:click="exportCsv('plugins')"
@@ -177,6 +181,10 @@ final class AdminPage {
                                 <option value="elementor"><?php esc_html_e('Elementor', 'wpe-wpr'); ?></option>
                             </select>
                         </div>
+                        <label class="wp-reporter__pdf-checkbox">
+                            <input type="checkbox" x-model="pdfIncludes.pages" />
+                            <span class="wp-reporter__checkbox-label"><?php esc_html_e('Include in PDF', 'wpe-wpr'); ?></span>
+                        </label>
                         <button type="button" 
                                 class="button wp-reporter__export-csv" 
                                 x-on:click="exportCsv('pages')"
@@ -247,6 +255,10 @@ final class AdminPage {
                                 <option value="current"><?php esc_html_e('Up to Date', 'wpe-wpr'); ?></option>
                             </select>
                         </div>
+                        <label class="wp-reporter__pdf-checkbox">
+                            <input type="checkbox" x-model="pdfIncludes.themes" />
+                            <span class="wp-reporter__checkbox-label"><?php esc_html_e('Include in PDF', 'wpe-wpr'); ?></span>
+                        </label>
                         <button type="button" 
                                 class="button wp-reporter__export-csv" 
                                 x-on:click="exportCsv('themes')"
@@ -290,6 +302,18 @@ final class AdminPage {
                 <div id="info-tab" 
                      class="wp-reporter__tab-content" 
                      x-show="currentTab === 'info'">
+                    <div class="wp-reporter__filters">
+                        <label class="wp-reporter__pdf-checkbox">
+                            <input type="checkbox" x-model="pdfIncludes.info" />
+                            <span class="wp-reporter__checkbox-label"><?php esc_html_e('Include in PDF', 'wpe-wpr'); ?></span>
+                        </label>
+                        <button type="button" 
+                                class="button wp-reporter__export-csv" 
+                                x-on:click="exportCsv('info')"
+                                x-bind:disabled="isExportingCsv"
+                                x-text="isExportingCsv ? '<?php esc_attr_e('Exporting...', 'wpe-wpr'); ?>' : '<?php esc_attr_e('Export CSV', 'wpe-wpr'); ?>'">
+                        </button>
+                    </div>
                     <div class="wp-reporter__info-sections">
                         <div class="wp-reporter__info-section">
                             <h3><?php esc_html_e('WordPress', 'wpe-wpr'); ?></h3>
@@ -383,6 +407,11 @@ final class AdminPage {
                                 <option value="server"><?php esc_html_e('Server', 'wpe-wpr'); ?></option>
                             </select>
                         </div>
+                        
+                        <label class="wp-reporter__pdf-checkbox">
+                            <input type="checkbox" x-model="pdfIncludes.errors" />
+                            <span class="wp-reporter__checkbox-label"><?php esc_html_e('Include in PDF', 'wpe-wpr'); ?></span>
+                        </label>
                         
                         <button type="button" 
                                 class="button wp-reporter__export-csv" 
